@@ -38,6 +38,18 @@ public class SecurityConfig {
         http
                 .csrf((auth) -> auth.disable());
 
+        http
+                .sessionManagement((auth)-> auth
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(true));
+        //동시접속 방지, 1개 이상 초과시 로그인 불허
+
+        http
+                .sessionManagement((auth)-> auth
+                        .sessionFixation().changeSessionId());
+        //세션 고정 보호 -> 해커로 부터 토큰 탈취 위험 방지
+
+
 
         return http.build();
     }
